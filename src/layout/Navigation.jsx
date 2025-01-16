@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 export default function Navigation() {
   return (
 		<div className='container'>
 			<nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
 				<div className='container-fluid'>
-					<a className='navbar-brand'>Human Resources System</a>
+					<Link className='navbar-brand'>Human Resources System</Link>
 					<button
 						className='navbar-toggler'
 						type='button'
@@ -18,10 +20,10 @@ export default function Navigation() {
 					<div className='collapse navbar-collapse' id='navbarNav'>
 						<ul className='navbar-nav'>
 							<li className='nav-item'>
-								<a className='nav-link active' aria-current='page' href='/'> Home </a>
+								<Link className='nav-link active' aria-current='page' to='/'> Home </Link>
 							</li>
 							<li className='nav-item'>
-								<a className='nav-link' href='/add'> Add Employee </a>
+								<Link className='nav-link' to='/add'> Add Employee </Link>
 							</li>
 						</ul>
 					</div>
