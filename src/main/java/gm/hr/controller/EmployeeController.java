@@ -47,6 +47,19 @@ public class EmployeeController {
             throw new ResourceNotFoundException("Employee with id " + id + " not found");
         return ResponseEntity.ok(employee);
     }
+
+    //PUT [http://{host}/rh-app/employees/?id]
+    @PutMapping("employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee employeeReceived) {
+        Employee employee = employeeService.getEmployeeById(id);
+        if (employee == null)
+            throw new ResourceNotFoundException("Employee with id " + id + " not found");
+        employee.setName(employeeReceived.getName());
+        employee.setDepartment(employeeReceived.getDepartment());
+        employee.setSalary(employeeReceived.getSalary());
+        employeeService.saveEmployee(employee);
+        return ResponseEntity.ok(employee);
+    }
 }
 
 
