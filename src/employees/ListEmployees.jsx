@@ -15,11 +15,14 @@ export default function ListEmployees() {
 
   const loadEmployees = async () => {
     const {data} = await axios.get(baseUrl);
-    console.log("Result load employees");
-    console.log(data);
+    // DEBUG // console.log("Result load employees"); console.log(data);
     setEmployees(data)
   }
 
+	const deleteEmployee = async (id) => {
+		await axios.delete(`${baseUrl}/${id}`);
+		loadEmployees();
+	}
 
   return (
 		<>
@@ -59,6 +62,11 @@ export default function ListEmployees() {
 										<div>
 											<Link to={`/edit/${employee.idEmployee}`} className="btn btn-warning btn-sm me-3">
 												Edit</Link>
+											<button
+												onClick={() => deleteEmployee(employee.idEmployee)}
+												className="btn btn-danger btn-sm"
+											>
+												Delete</button>
 										</div>
 									</td>
 								</tr>
