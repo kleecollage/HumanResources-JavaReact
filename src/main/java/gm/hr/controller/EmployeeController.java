@@ -1,10 +1,12 @@
 package gm.hr.controller;
 
+import gm.hr.exception.ResourceNotFoundException;
 import gm.hr.model.Employee;
 import gm.hr.service.EmployeeService;
 import gm.hr.service.IEmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,15 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         logger.info("Adding employee " + employee);
         return employeeService.saveEmployee(employee);
+    }
+
+    // GET [http://{host}/rh-app/employees/?id]
+    @GetMapping("employees/{id}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable Integer id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        if (employee == null)
+            throw new ResourceNotFoundException("Employee with id " + id + " not found");
+        return ResponseEntity.ok(employee);
     }
 }
 
