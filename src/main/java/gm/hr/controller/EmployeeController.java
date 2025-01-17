@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 // http://host/rh-app
@@ -48,7 +50,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    //PUT [http://{host}/rh-app/employees/?id]
+    // PUT [http://{host}/rh-app/employees/?id]
     @PutMapping("employees/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee employeeReceived) {
         Employee employee = employeeService.getEmployeeById(id);
@@ -60,6 +62,20 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok(employee);
     }
+
+    // DELETE [http://{host}/rh-app/employees/?id]
+    @DeleteMapping("employees/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Integer id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        if (employee == null)
+            throw new ResourceNotFoundException("Employee with id " + id + " not found");
+        employeeService.deleteEmployee(employee);
+        // JSON {"deleted": "true"}
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
 }
 
 
